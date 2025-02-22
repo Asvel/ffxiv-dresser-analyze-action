@@ -1,0 +1,147 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.app {
+  display: flow-root;
+  width: 800px;
+  margin: 0 auto;
+  font-size: 14px;
+  font-family: Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \5FAE\8F6F\96C5\9ED1, sans-serif;
+  line-height: 1.4286;
+  color: #333;
+}
+
+h2 {
+  margin: 24px 0 8px 208px;
+  font-size: 24px;
+}
+h2:focus {
+  outline: none;
+}
+h2 i {
+  margin-left: 4px;
+  font-size: 14px;
+  font-weight: normal;
+  color: #999;
+}
+
+.refresh {
+  position: sticky;
+  top: 0;
+  float: right;
+  padding: 4px 8px;
+}
+.refresh input {
+  margin-right: 2px;
+  vertical-align: -1px;
+}
+
+.nodata {
+  margin: 40px 0;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.entry {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+.entry--title {
+  display: inline-block;
+  width: 200px;
+  margin-top: -1px;
+  margin-right: 8px;
+  text-align: right;
+  vertical-align: top;
+}
+.entry--name {
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 20px;
+}
+.entry--items {
+  display: inline-block;
+}
+.entry--item-icon {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-right: 4px;
+  vertical-align: top;
+  background-repeat: no-repeat;
+  background-position-y: 0;
+  /* border: 1px solid #221f1a; */
+  border-radius: 5px;
+  cursor: url(./copy.svg), auto;
+}
+.entry--item-dye {
+  position: absolute;
+  right: 0px;
+  top: -1px;
+  width: 9px;
+  height: 9px;
+  border: 1px solid #000;
+  border-radius: 100%;
+}
+.entry--item-dye + .entry--item-dye {
+  top: 12px;
+}
+.entry--item-info {
+  display: inline-block;
+  margin-top: -1px;
+  vertical-align: top;
+}
+
+.badge {
+  display: inline-block;
+  min-width: 39px;
+  padding: 4px 7px 3px;
+  font-size: 12px;
+  line-height: 1;
+  text-align: center;
+  border-radius: 5px;
+}
+.badge:not(:first-child) {
+  margin-left: 4px;
+}
+.badge--blue {
+  color: #00254d;
+  background-color: #e0f0ff;
+}
+.badge--green {
+  color: #1c2b25;
+  background-color: #ddf3e5;
+}
+.badge--orange {
+  color: #451e11;
+  background-color: #ffe7d6;
+}
+
+.about {
+  margin-top: 26px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  line-height: 19px;
+  text-align: center;
+  color: #999;
+}
+.about--separator {
+  margin: 0 4px;
+}
+.about_version {
+  margin-left: 4px;
+}
+.about--link {
+  color: #999;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "ffxiv-outfit",
+  "version": "1.0.0",
+  "description": "Final Fantasy XIV Glamour Dresser Analyze",
+  "license": "MIT",
+  "repository": "https://github.com/Asvel/ffxiv-dresser-analyze",
+  "scripts": {
+    "start": "rsbuild dev",
+    "build": "rsbuild build"
+  },
+  "dependencies": {
+    "@solid-primitives/memo": "^1.4.0",
+    "normalize.css": "^8.0.1",
+    "solid-js": "^1.9.4"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^1.2.11",
+    "@rsbuild/plugin-solid": "^1.0.5",
+    "@rsbuild/plugin-type-check": "^1.2.1",
+    "@types/node": "^22.13.4",
+    "typescript": "^5.7.3"
+  }
+}
