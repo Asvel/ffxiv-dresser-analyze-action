@@ -75,6 +75,7 @@ export class Store {
   ready = false;
   dresserItems: Map<number, DresserItem>;
   retainedOutfitIds: Set<number> = new Set();
+  showSingleItemOutfit = false;
 
   static create() {
     const store: Store = createMutable(new Store() as any);
@@ -138,8 +139,8 @@ export class Store {
         };
       })
       if (count === 0) return;
-      if (count === 1 && !this.retainedOutfitIds.has(outfit.id)) return;
-      this.retainedOutfitIds.add(outfit.id);
+      if (count === 1 && !this.showSingleItemOutfit && !this.retainedOutfitIds.has(outfit.id)) return;
+      if (count > 1) this.retainedOutfitIds.add(outfit.id);
       if (count < items.length && count === hqCount) {  // 现有全为HQ，缺的也用HQ
         for (const item of items) {
           item.hq = true;

@@ -19,7 +19,17 @@ export function App() {
             when={store.dresserItems.size > 0}
             fallback={<div class="nodata">无数据，请在游戏内打开投影台</div>}
           >
-            <h2 tabIndex="0">可套装幻影化</h2>
+            <h2 tabIndex="0">
+              可套装幻影化
+              <label>
+                <input
+                  type="checkbox"
+                  checked={store.showSingleItemOutfit}
+                  onChange={e => store.showSingleItemOutfit = e.target.checked}
+                />
+                显示仅拥有其中一件的套装
+              </label>
+            </h2>
             {indexRender(() => store.outfitAdvices, advice => <OutfitEntry {...advice()} />)}
             <h2 tabIndex="0">可放入收藏柜</h2>
             {indexRender(() => store.cabinetAdvices, advice => <CategoryEntry {...advice()} />)}
