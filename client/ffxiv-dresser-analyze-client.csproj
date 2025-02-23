@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Copy SourceFiles="$(ProjectDir)..\web\dist\index.html" DestinationFiles="$(OutputPath)ffxiv-dresser-analyze.html" />
+    <Copy SourceFiles="$(ProjectDir)..\web\dist\index.html" DestinationFiles="$(OutputPath)ffxiv-dresser-analyze.web" />
   </Target>
 
 </Project>

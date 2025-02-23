@@ -7,7 +7,7 @@ namespace ffxiv_dresser_analyze_client
     internal class WebServer(StaticData staticData, DresserData dresserData)
     {
         private readonly byte[] html = File.ReadAllBytes(
-            Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "ffxiv-dresser-analyze.html"));
+            Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "ffxiv-dresser-analyze.web"));
         
         private HttpListener listener = new();
 
