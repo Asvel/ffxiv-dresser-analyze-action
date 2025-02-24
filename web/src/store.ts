@@ -46,7 +46,7 @@ const categories = [
   '',
   '主手', '副手',
   '头部', '身体', '手臂', '', '腿部', '脚部',
-  '颈部', '耳部', '腕部', '戒指'
+  '耳部', '颈部', '腕部', '戒指'
 ];
 
 async function fetchJson(url: string) {
