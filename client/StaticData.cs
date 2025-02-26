@@ -1,6 +1,5 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Xml.Linq;
 using Lumina;
 using Lumina.Data;
 using Lumina.Data.Files;
@@ -37,7 +36,22 @@ namespace ffxiv_dresser_analyze_client
 
         public StaticData(string sqpackPath)
         {
-            lumina = new GameData(sqpackPath, new() { DefaultExcelLanguage = Lumina.Data.Language.ChineseSimplified });
+            lumina = new GameData(sqpackPath, new() { DefaultExcelLanguage = Language.ChineseSimplified });
+            if (lumina.GetFile("exd/Item_0_chs.exd") == null)
+            {
+                Console.Write("请输入游戏数据语言（J/E/D/F/K）：");
+                var input = Console.ReadLine()!;
+                lumina.Options.DefaultExcelLanguage = char.ToUpperInvariant(input[0]) switch
+                {
+                    'J' => Language.Japanese,
+                    'E' => Language.English,
+                    'D' => Language.German,
+                    'F' => Language.French,
+                    'K' => Language.Korean,
+                    _ => throw new InvalidOperationException("输入内容无法识别"),
+                };
+            }
+
             uiPack = lumina.Repositories["ffxiv"].Categories[6][0];
 
             var sItem = lumina.GetExcelSheet<Item>()!;
