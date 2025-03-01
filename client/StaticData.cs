@@ -6,6 +6,8 @@ using Lumina.Data.Files;
 using Lumina.Excel;
 using Lumina.Excel.Sheets;
 
+#pragma warning disable IDE0079
+#pragma warning disable CA1859
 namespace ffxiv_dresser_analyze_client
 {
     internal class StaticData
@@ -36,7 +38,16 @@ namespace ffxiv_dresser_analyze_client
 
         public StaticData(string sqpackPath)
         {
-            lumina = new GameData(sqpackPath, new() { DefaultExcelLanguage = Language.ChineseSimplified });
+            // 这个预加载老慢了，所以把用不到的删一删
+            foreach (var category in Repository.CategoryNameToIdMap.Keys)
+            {
+                if (category != "ui" && category != "exd")
+                {
+                    Repository.CategoryNameToIdMap.Remove(category);
+                }
+            }
+
+            lumina = new GameData(sqpackPath, new() { DefaultExcelLanguage = Language.ChineseSimplified, LoadMultithreaded = true });
             if (lumina.GetFile("exd/Item_0_chs.exd") == null)
             {
                 Console.Write("请输入游戏数据语言（J/E/D/F/K）：");
@@ -74,7 +85,7 @@ namespace ffxiv_dresser_analyze_client
             return file?.ImageData;
         }
 
-        private void AddJson(string path, dynamic content)
+        private void AddJson(string path, object content)
         {
             Jsons.Add(path, JsonSerializer.SerializeToUtf8Bytes(content, JsonOptions));
         }
@@ -84,7 +95,7 @@ namespace ffxiv_dresser_analyze_client
             return (((10000 - eItem.LevelItem.RowId) * 10000u + eItem.Unknown4) * 100000u + eItem.RowId);
         }
 
-        private dynamic GenerateOutfits()
+        private object GenerateOutfits()
         {
             var sItem = lumina.GetExcelSheet<Item>()!;
             var outfits = new List<(ulong SortKey, object Value)>();
@@ -116,11 +127,11 @@ namespace ffxiv_dresser_analyze_client
             return outfits.Select(x => x.Value).ToArray();
         }
 
-        private dynamic GenerateCabinets()
+        private object GenerateCabinets()
         {
             return GenerateCategorized(lumina.GetExcelSheet<Cabinet>()!.Select(e => e.Item.Value));
         }
-        private dynamic GenerateReclaims()
+        private object GenerateReclaims()
         {
             var sGilShopInfo = lumina.GetExcelSheet<GilShopInfo>()!;
             return GenerateCategorized(lumina.GetExcelSheet<Item>()!.Where(eItem =>
@@ -134,7 +145,7 @@ namespace ffxiv_dresser_analyze_client
             }));
 
         }
-        private dynamic GenerateCategorized(IEnumerable<Item> items)
+        private object GenerateCategorized(IEnumerable<Item> items)
         {
             itemCategories ??= lumina.GetExcelSheet<RawRow>(name: "EquipSlotCategory")!.Select(e =>
             {
@@ -169,7 +180,7 @@ namespace ffxiv_dresser_analyze_client
             return ret;
         }
 
-        private dynamic GenerateDyes()
+        private object GenerateDyes()
         {
             return lumina.GetExcelSheet<Stain>()!.Select(eStain =>
             {
