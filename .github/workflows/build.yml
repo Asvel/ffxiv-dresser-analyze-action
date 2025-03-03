@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
     steps:
     - uses: actions/checkout@v4
 
@@ -28,7 +31,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Build Client
-      run: dotnet build --configuration Release --verbosity detailed
+      run: dotnet build --configuration Release
       working-directory: client
 
     - name: Upload Artifact
