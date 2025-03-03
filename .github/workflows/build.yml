@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+    branches: [ $default-branch ]
+
+jobs:
+  build-web:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
+      working-directory: web
+    - name: Build Web
+      run: npm run build
+      working-directory: web
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+      working-directory: client
+    - name: Build Client
+      run: dotnet build --configuration Release
+      working-directory: client
