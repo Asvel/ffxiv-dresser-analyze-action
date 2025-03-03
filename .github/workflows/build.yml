@@ -28,7 +28,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Build Client
-      run: dotnet build --configuration Release
+      run: dotnet build --configuration Release --verbosity detailed
       working-directory: client
 
     - name: Upload Artifact
