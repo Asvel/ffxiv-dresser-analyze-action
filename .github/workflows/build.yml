@@ -41,6 +41,6 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        body: ${{ steps.checksum.outputs }}
+        body: ${{ toJSON(steps.checksum.outputs) }}
         draft: true
         files: ${{ env.dist }}
