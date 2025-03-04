@@ -43,9 +43,21 @@ jobs:
         Get-FileHash -A SHA256 ${{ env.dist }} | %{ $sha256 = $_.Hash.ToLowerInvariant() }
         $sha256
         "sha256=$sha256" >> $env:GITHUB_OUTPUT
+    - name: Get Log Url
+      uses: actions/github-script@v7
+      id: url
+      with:
+        script: |
+          const { data } = await github.rest.actions.listJobsForWorkflowRunAttempt({
+            ...context.repo,
+            run_id: context.runId,
+            attempt_number: process.env.GITHUB_RUN_ATTEMPT,
+          });
+          return data.jobs[0].html_url
+        result-encoding: string
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        body: "[${{ steps.checksum.outputs.sha256 }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})/job/${{ github.job }}"
+        body: "[${{ steps.checksum.outputs.sha256 }}](${{ steps.url.outputs.result }})#step:8:10"
         draft: true
         files: ${{ env.dist }}
