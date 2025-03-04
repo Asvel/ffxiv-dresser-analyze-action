@@ -21,11 +21,10 @@ jobs:
         node-version: 20
         cache: 'npm'
         cache-dependency-path: web/package-lock.json
-    - name: Install
-      run: npm install
-      working-directory: web
     - name: Build Web
-      run: npm run build
+      run: |
+        npm install
+        npm run build
       working-directory: web
 
     - name: Setup .NET
@@ -44,6 +43,6 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        body: ${{ toJSON(steps.checksum.outputs) }}
+        body: ${{ hashFiles(${{ env.dist }}) }}
         draft: true
         files: ${{ env.dist }}
