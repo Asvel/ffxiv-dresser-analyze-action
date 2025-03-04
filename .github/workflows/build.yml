@@ -35,4 +35,6 @@ jobs:
       working-directory: client
 
     - name: Pack
-      run: 7z a -mx9 -bb3 ffxiv-dresser-analyze.zip ./client/bin/Release/net8.0/*
+      run: 7z a -mx9 -bb ffxiv-dresser-analyze.zip ./client/bin/Release/net8.0/*
+    - name: Checksum
+      run: (Get-FileHash ffxiv-dresser-analyze.zip)[0].Hash
