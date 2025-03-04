@@ -40,12 +40,12 @@ jobs:
     - name: Checksum
       id: checksum
       run: |
-        $sha256 = (Get-FileHash -A SHA256 xxx.zip)[0].Hash.ToLowerInvariant()
+        Get-FileHash -A SHA256 ${{ env.dist }} | %{ $sha256 = $_.Hash.ToLowerInvariant() }
         $sha256
-        "checksum=$sha256" >> $env:GITHUB_OUTPUT
+        "sha256=$sha256" >> $env:GITHUB_OUTPUT
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        body: ${{ steps.checksum.outputs.checksum }}
+        body: "[${{ steps.checksum.outputs.sha256 }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})/job/${{ github.job }}"
         draft: true
         files: ${{ env.dist }}
