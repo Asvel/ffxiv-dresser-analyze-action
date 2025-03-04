@@ -39,10 +39,13 @@ jobs:
       run: 7z a -mx9 -bb ${{ env.dist }} ./client/bin/Release/net8.0/*
     - name: Checksum
       id: checksum
-      run: Get-FileHash -A SHA256 ${{ env.dist }} | %{ $_.Hash }
+      run: |
+        $sha256 = (Get-FileHash -A SHA256 xxx.zip)[0].Hash.ToLowerInvariant()
+        $sha256
+        "checksum=$sha256" >> $env:GITHUB_OUTPUT
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
-        body: ${{ hashFiles(env.dist) }}
+        body: ${{ steps.checksum.outputs.checksum }}
         draft: true
         files: ${{ env.dist }}
