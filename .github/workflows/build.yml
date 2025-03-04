@@ -2,14 +2,13 @@ name: Build
 
 on:
   push:
-    branches: [ master ]
+    tags: [ v* ]
 
 jobs:
   build:
     runs-on: windows-latest
     env:
-      DOTNET_NOLOGO: true
-      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      dist: ffxiv-dresser-analyze-${{ github.ref_name }}.zip
     steps:
     - uses: actions/checkout@v4
 
@@ -35,6 +34,13 @@ jobs:
       working-directory: client
 
     - name: Pack
-      run: 7z a -mx9 -bb ffxiv-dresser-analyze.zip ./client/bin/Release/net8.0/*
+      run: 7z a -mx9 -bb ${{ env.dist }} ./client/bin/Release/net8.0/*
     - name: Checksum
-      run: (Get-FileHash ffxiv-dresser-analyze.zip)[0].Hash
+      id: checksum
+      run: Get-FileHash -A SHA256 ${{ env.dist }} | %{ $_.Hash }
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        body: ${{ steps.checksum.outputs }}
+        draft: true
+        files: ${{ env.dist }}
