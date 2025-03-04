@@ -34,8 +34,5 @@ jobs:
       run: dotnet build --configuration Release
       working-directory: client
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        path: client/bin/Release/net8.0/
-        compression-level: 9
+    - name: Pack
+      run: 7z a -mx9 -bb3 ffxiv-dresser-analyze.zip ./client/bin/Release/net8.0/*
